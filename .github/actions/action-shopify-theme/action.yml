@@ -52,6 +52,7 @@ runs:
       run: |
         npm i
         npm run build:production
+      shell: bash
 
     - name: Create Shopify Theme
       if: ${{ env.THEME_ID == '' }}
