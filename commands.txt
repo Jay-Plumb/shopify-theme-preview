@@ -1,0 +1,4 @@
+```
+git tag -a -m "shopify prevew theme auto attach to github description and comment" v1.0.1
+git push --follow-tags
+```
