@@ -3,11 +3,12 @@
     "store": "auto-preview"
   },
   "name": "shopify-theme-preview",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Shopify theme preview",
   "scripts": {
     "shopify:serve": "shopify theme dev --store=$npm_package_config_store",
-    "dev": "run-p shopify:serve"
+    "dev": "run-p shopify:serve",
+    "build:production": ""
   },
   "author": "Jay Plumb",
   "license": "ISC",

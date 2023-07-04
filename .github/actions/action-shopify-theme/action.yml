@@ -1,6 +1,10 @@
 name: "Creates/Updates Shopify Theme"
 description: "Creates/Updates a Shopify theme and returns the preview link and admin link"
 
+inputs:
+  build-production:
+    description: "Build Production"
+    default: false
 outputs:
   preview-link:
     description: "Preview Link"
@@ -41,6 +45,13 @@ runs:
     - name: THEME_ID
       run: |
         echo "THEME_ID=$(echo $(shopify theme list | grep \${{ env.CURRENT_BRANCH }} | awk '{print $NF}' | tr -d '#'))" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Build Theme
+      if: ${{ inputs.build-production }}
+      run: |
+        npm i
+        npm run build:production
       shell: bash
 
     - name: Create Shopify Theme

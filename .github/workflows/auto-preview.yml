@@ -11,6 +11,7 @@ env:
   GH_TOKEN: ${{ github.token }}
   SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_FLAG_STORE }}
   SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+  BUILD_PRODUCTION: true
   SHOPIFY_CLI_TTY: 0 # https://shopify.dev/docs/themes/tools/cli/ci-cd#step-2-integrate-shopify-cli-into-your-pipeline TODO when there is a theme limit, the following should stop interactive prompts but it doesn't seem to work
 
 concurrency:
@@ -25,8 +26,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - id: preview-link
-        uses: Jay-Plumb/shopify-theme-preview@v1.0.0 # TODO when debugging just do @branch where branch is the branch name
+      - uses: Jay-Plumb/shopify-theme-preview@branch-2 # TODO when debugging just do @branch where branch is the branch name
         with:
           shopify-flag-store: ${{ env.SHOPIFY_FLAG_STORE }}
           shopify-cli-theme-token: ${{ env.SHOPIFY_CLI_THEME_TOKEN }}
+          build-production: ${{ env.BUILD_PRODUCTION }}

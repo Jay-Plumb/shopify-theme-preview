@@ -9,11 +9,14 @@ description: "Creates/Updates a Shopify theme and adds the preview link within t
 
 inputs:
   shopify-flag-store:
-    description: "The Shopify store URL e.g. store-name.myshopify.com"
+    description: "The Shopify store URL e.g. store-name.myshopify.com {String}"
     required: true
   shopify-cli-theme-token:
-    description: "The Shopify CLI theme token created via a custom app"
+    description: "The Shopify CLI theme token created via a custom app {Number}"
     required: true
+  build-production:
+    description: "Run any staging/production build logic prior to theme create/update {Boolean}"
+    default: false
 
 branding:
   icon: shopping-cart
@@ -30,6 +33,8 @@ runs:
 
     - id: preview-link
       uses: ./.github/actions/action-shopify-theme
+      with:
+        build-production: ${{ inputs.build-production }}
 
     - run: |
         echo preview link ${{ steps.preview-link.outputs.preview-link }}
