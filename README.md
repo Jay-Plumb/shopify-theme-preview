@@ -21,6 +21,15 @@ The workflow is triggered when a Pull Request is both opened and any additional 
 Usually, when you are building a shopify theme locally, you will have made local edits via a pull request and then wish to compile an javascript
 or any other build logic prior to theme deployment. There is an optional flag named `BUILD_PRODUCTION` which if set to `true` will look for a script command within the `package.json` file and execute just before a shopify theme is created/updated.
 
+```json
+// package.json
+"scripts": {
+  "build:production": ""
+},
+```
+
+> Enter any build related compilation as the value.
+
 ## Usage
 
 ```
