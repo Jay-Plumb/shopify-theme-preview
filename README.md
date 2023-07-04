@@ -6,16 +6,17 @@ The workflow is triggered when a Pull Request is both opened and any additional 
 
 ## Setup
 
-| Secret                  | Description                                          |
-| ----------------------- | ---------------------------------------------------- |
-| SHOPIFY_FLAG_STORE      | The Shopify store URL e.g. store-name.myshopify.com  |
-| SHOPIFY_CLI_THEME_TOKEN | The Shopify CLI theme token created via a custom app |
+| Secret                  | Description                                          | Required | Type    |
+| ----------------------- | ---------------------------------------------------- | -------- | ------- |
+| SHOPIFY_FLAG_STORE      | The Shopify store URL e.g. store-name.myshopify.com  | true     | String  |
+| SHOPIFY_CLI_THEME_TOKEN | The Shopify CLI theme token created via a custom app | true     | Number  |
+| BUILD_PRODUCTION        | Assumes there is a script named: "build:production"  | optional | Boolean |
 
-## Existing Functionality Callouts
+## SHOPIFY_FLAG_STORE
 
-> Currently, there is no support if you have a build step locally prior to shopify theme creation. If this would be of interest, open up a feature request.
+## SHOPIFY_CLI_THEME_TOKEN
 
-### Developer Notes
+## BUILD_PRODUCTION
 
-git tag -a -m "shopify prevew theme auto attach to github description and comment" v1.0.1
-git push --follow-tags
+Usually, when you are building a shopify theme locally, you will have made local edits via a pull request and then wish to compile an javascript
+or any other build logic prior to theme deployment. There is an optional flag named `BUILD_PRODUCTION` which if set to `true` will look for a script command within the `package.json` file and execute just before a shopify theme is created/updated.
