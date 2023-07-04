@@ -4,6 +4,12 @@ Creates/Updates a Shopify theme to the respective tore and adds the preview link
 
 The workflow is triggered when a Pull Request is both opened and any additional commits are made to the branch.
 
+## Repository Settings
+
+![permissions](./docs/permissions.png)
+
+> Append `/settings/actions` to the base repo URL to access the above settings. The setting `Read and write permissions` is required while the checkbox is optional.
+
 ## Variables Setup
 
 | Secret                  | Description                                          | Required | Type    |
@@ -14,7 +20,31 @@ The workflow is triggered when a Pull Request is both opened and any additional 
 
 ### SHOPIFY_FLAG_STORE
 
+The store URL e.g. `store-name.myshopify.com`
+
 ### SHOPIFY_CLI_THEME_TOKEN
+
+The following is a walkthrough to obtain the `SHOPIFY_CLI_THEME_TOKEN`:
+
+![app create custom](./docs/app-create-custom.png)
+
+> Append `/admin/settings/apps/development` to the shopify store URL to allow custom app development
+
+![app scopes](./docs/app-scopes.png)
+
+> Select `write_themes` and `read_themes` within the Admiin API access scopes
+
+![app install](./docs/app-install.png)
+
+> Install the custom app
+
+![app api access](./docs/app-api-access.png)
+
+> Click `Reveal token once` and use the value for `SHOPIFY_CLI_THEME_TOKEN`
+
+### Secrets
+
+Both `SHOPIFY_FLAG_STORE` and `SHOPIFY_CLI_THEME_TOKEN` should live as secrets and can be achieved by appending `/settings/secrets/actions` to the repo URL and selecting `New repository secret`.
 
 ### BUILD_PRODUCTION
 
