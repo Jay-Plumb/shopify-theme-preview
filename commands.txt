@@ -1,4 +1,4 @@
 ```
-git tag -a -m "custom builds support" v1.1.0
+git tag -a -m "update readme.md" v1.1.1
 git push --follow-tags
 ```
