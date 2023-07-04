@@ -30,3 +30,4 @@ jobs:
         with:
           shopify-flag-store: ${{ env.SHOPIFY_FLAG_STORE }}
           shopify-cli-theme-token: ${{ env.SHOPIFY_CLI_THEME_TOKEN }}
+          build-production: ${{ env.BUILD_PRODUCTION }}

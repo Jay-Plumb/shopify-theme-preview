@@ -1,6 +1,10 @@
 name: "Creates/Updates Shopify Theme"
 description: "Creates/Updates a Shopify theme and returns the preview link and admin link"
 
+inputs:
+  build-production:
+    description: "Build Production"
+    default: false
 outputs:
   preview-link:
     description: "Preview Link"
@@ -46,6 +50,7 @@ runs:
     - name: Create Shopify Theme
       if: ${{ env.THEME_ID == '' }}
       run: |
+        echo ${{ inputs.build-production }}
         echo "JSON_RESPONSE=$(echo $(shopify theme push --unpublished --json --theme='[${{ env.FIRST_THREE_GITHUB_USERNAME }}] - ${{ env.CURRENT_BRANCH }}' --only assets/ config/ layout/ locales/ sections/ snippets/ templates/ ))" >> $GITHUB_ENV
       shell: bash
 
@@ -53,6 +58,7 @@ runs:
       if: ${{ env.THEME_ID != '' }}
       # On subsequent pushes we exclude all .json files within /templates folder so as to not override QA changes
       run: |
+        echo ${{ inputs.build-production }}
         echo "Theme found: UPDATE"
         echo "JSON_RESPONSE=$(echo $(shopify theme push -t ${{ env.THEME_ID }} --only assets/ config/ layout/ locales/ sections/ snippets/ templates/ --json ))" >> $GITHUB_ENV
       shell: bash

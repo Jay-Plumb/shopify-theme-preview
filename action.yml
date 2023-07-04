@@ -33,6 +33,8 @@ runs:
 
     - id: preview-link
       uses: ./.github/actions/action-shopify-theme
+      with:
+        build-production: ${{ inputs.build-production }}
 
     - run: |
         echo preview link ${{ steps.preview-link.outputs.preview-link }}
