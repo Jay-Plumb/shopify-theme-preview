@@ -54,10 +54,15 @@ runs:
         npm run build:production
       shell: bash
 
+     - name: Shopify Name
+      run: |
+        echo "SHOPIFY_NAME=$(echo '[${{ env.FIRST_THREE_GITHUB_USERNAME }}] - ${{ env.CURRENT_BRANCH }}' | cut -c1-50)" >> $GITHUB_ENV
+      shell: bash
+
     - name: Create Shopify Theme
       if: ${{ env.THEME_ID == '' }}
       run: |
-        echo "JSON_RESPONSE=$(echo $(shopify theme push --unpublished --json --theme='[${{ env.FIRST_THREE_GITHUB_USERNAME }}] - ${{ env.CURRENT_BRANCH }}' --only assets/ config/ layout/ locales/ sections/ snippets/ templates/ ))" >> $GITHUB_ENV
+        echo "JSON_RESPONSE=$(echo $(shopify theme push --unpublished --json --theme='${{ env.SHOPIFY_NAME }}' --only assets/ config/ layout/ locales/ sections/ snippets/ templates/ ))" >> $GITHUB_ENV
       shell: bash
 
     - name: Update Shopify Theme
