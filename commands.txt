@@ -1,4 +1,4 @@
 ```
-git tag -a -m "update readme.md" v1.1.1
+git tag -a -m "cap to first 50 chars when creating shopify theme" v1.1.2
 git push --follow-tags
 ```
