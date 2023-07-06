@@ -64,7 +64,7 @@ or any other build logic prior to theme deployment. There is an optional flag na
 
 ```yml
 steps:
-  - uses: Jay-Plumb/shopify-theme-preview@1.1.2
+  - uses: Jay-Plumb/shopify-theme-preview@1.1.3
     with:
       shopify-flag-store: ${{ env.SHOPIFY_FLAG_STORE }}
       shopify-cli-theme-token: ${{ env.SHOPIFY_CLI_THEME_TOKEN }}
