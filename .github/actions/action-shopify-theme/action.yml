@@ -36,17 +36,6 @@ runs:
       run: echo ${{ env.CURRENT_BRANCH }}
       shell: bash
 
-    - name: Github Username [ABC]
-      run: |
-        echo ${{ github.actor }} | sed -e 's/^\(.\{3\}\).*/\U\1/'
-        echo "FIRST_THREE_GITHUB_USERNAME=$(echo ${{ github.actor }} | sed -e 's/^\(.\{3\}\).*/\U\1/')" >> $GITHUB_ENV
-      shell: bash
-
-    - name: THEME_ID
-      run: |
-        echo "THEME_ID=$(echo $(shopify theme list | grep \${{ env.CURRENT_BRANCH }} | awk '{print $NF}' | tr -d '#'))" >> $GITHUB_ENV
-      shell: bash
-
     - name: Build Theme
       if: ${{ inputs.build-production }}
       run: |
@@ -54,9 +43,14 @@ runs:
         npm run build:production
       shell: bash
 
-     - name: Shopify Name
+    - name: Shopify Name
       run: |
-        echo "SHOPIFY_NAME=$(echo '[${{ env.FIRST_THREE_GITHUB_USERNAME }}] - ${{ env.CURRENT_BRANCH }}' | cut -c1-50)" >> $GITHUB_ENV
+        echo "SHOPIFY_NAME=$(echo '${{ env.CURRENT_BRANCH }}' | cut -c1-50)" >> $GITHUB_ENV
+      shell: bash
+
+    - name: THEME_ID
+      run: |
+        echo "THEME_ID=$(echo $(shopify theme list | grep \${{ env.SHOPIFY_NAME }} | awk '{print $NF}' | tr -d '#'))" >> $GITHUB_ENV
       shell: bash
 
     - name: Create Shopify Theme
@@ -70,7 +64,7 @@ runs:
       # On subsequent pushes we exclude all .json files within /templates folder so as to not override QA changes
       run: |
         echo "Theme found: UPDATE"
-        echo "JSON_RESPONSE=$(echo $(shopify theme push -t ${{ env.THEME_ID }} --only assets/ config/ layout/ locales/ sections/ snippets/ templates/ --json ))" >> $GITHUB_ENV
+        echo "JSON_RESPONSE=$(echo $(shopify theme push -t ${{ env.THEME_ID }} --only assets/ config/ layout/ locales/ sections/ snippets/ templates/ --ignore templates/*json --json ))" >> $GITHUB_ENV
       shell: bash
 
     - name: Extract JSON Entries
