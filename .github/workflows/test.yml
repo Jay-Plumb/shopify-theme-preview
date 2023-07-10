@@ -14,3 +14,5 @@ jobs:
       - name: open PR
         run: |
           gh pr create --base dev --head main --title "Automated PR" --body "Automated PR"
+        env:
+          GH_TOKEN: ${{ github.token }}
