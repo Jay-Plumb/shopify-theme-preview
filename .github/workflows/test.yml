@@ -1,0 +1,16 @@
+name: (Semi) Automate Upstream changes into development workflow
+
+on:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: open PR
+        run: |
+          gh pr create --base dev --head main --title "Automated PR" --body "Automated PR"
