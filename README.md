@@ -12,10 +12,10 @@ The workflow is triggered when a Pull Request is both opened and any additional 
 
 ## Variables Setup
 
-| Secret                  | Description                                          | Required | Type    |
-| ----------------------- | ---------------------------------------------------- | -------- | ------- |
-| SHOPIFY_FLAG_STORE      | The Shopify store URL e.g. store-name.myshopify.com  | true     | String  |
-| SHOPIFY_CLI_THEME_TOKEN | The Shopify CLI theme token created via a custom app | true     | Number  |
+| Secret                  | Description                                          | Required |  Type   |
+| ----------------------- | ---------------------------------------------------- | :------: | :-----: |
+| SHOPIFY_FLAG_STORE      | The Shopify store URL e.g. store-name.myshopify.com  |   true   | String  |
+| SHOPIFY_CLI_THEME_TOKEN | The Shopify CLI theme token created via a custom app |   true   | Number  |
 | BUILD_PRODUCTION        | Assumes there is a script named: "build:production"  | optional | Boolean |
 
 ### SHOPIFY_FLAG_STORE
@@ -64,9 +64,26 @@ or any other build logic prior to theme deployment. There is an optional flag na
 
 ```yml
 steps:
-  - uses: Jay-Plumb/shopify-theme-preview@1.1.4
+  - uses: Jay-Plumb/shopify-theme-preview@main
     with:
       shopify-flag-store: ${{ env.SHOPIFY_FLAG_STORE }}
       shopify-cli-theme-token: ${{ env.SHOPIFY_CLI_THEME_TOKEN }}
       build-production: ${{ env.BUILD_PRODUCTION }}
+```
+
+| flag             | required |  type   |
+| ---------------- | :------: | :-----: |
+| node-version     |  false   | Integer |
+| build-production |  false   | Boolean |
+| path             |  false   | String  |
+
+```yml
+steps:
+  - uses: Jay-Plumb/shopify-theme-preview@main
+    with:
+      shopify-flag-store: ${{ env.SHOPIFY_FLAG_STORE }}
+      shopify-cli-theme-token: ${{ env.SHOPIFY_CLI_THEME_TOKEN }}
+      build-production: ${{ env.BUILD_PRODUCTION }}
+      node-version: 16
+      path: shop
 ```

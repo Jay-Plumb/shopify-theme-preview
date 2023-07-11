@@ -5,6 +5,13 @@ inputs:
   build-production:
     description: "Build Production"
     default: false
+  node-version:
+    description: "Node Version to build the shopify theme with"
+    default: 18
+  path:
+    description: "Path to the shopify theme"
+    default: ./
+
 outputs:
   preview-link:
     description: "Preview Link"
@@ -12,12 +19,13 @@ outputs:
   editor-link:
     description: "Editor Link"
     value: ${{ steps.shopify-theme-data.outputs.editor-link }}
+
 runs:
   using: "composite"
   steps:
     - uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version: ${{ inputs.node-version }}
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.1
@@ -56,7 +64,7 @@ runs:
     - name: Create Shopify Theme
       if: ${{ env.THEME_ID == '' }}
       run: |
-        echo "JSON_RESPONSE=$(echo $(shopify theme push --unpublished --json --theme='${{ env.SHOPIFY_NAME }}' --only assets/ config/ layout/ locales/ sections/ snippets/ templates/ ))" >> $GITHUB_ENV
+        echo "JSON_RESPONSE=$(echo $(shopify theme push --unpublished --theme='${{ env.SHOPIFY_NAME }}' --only assets/ config/ layout/ locales/ sections/ snippets/ templates/ --path=${{ inputs.path }} --json ))" >> $GITHUB_ENV
       shell: bash
 
     - name: Update Shopify Theme
@@ -64,7 +72,7 @@ runs:
       # On subsequent pushes we exclude all .json files within /templates folder so as to not override QA changes
       run: |
         echo "Theme found: UPDATE"
-        echo "JSON_RESPONSE=$(echo $(shopify theme push -t ${{ env.THEME_ID }} --only assets/ config/ layout/ locales/ sections/ snippets/ templates/ --ignore templates/*json --json ))" >> $GITHUB_ENV
+        echo "JSON_RESPONSE=$(echo $(shopify theme push -t ${{ env.THEME_ID }} --only assets/ config/ layout/ locales/ sections/ snippets/ templates/ --ignore templates/*json --path=${{ inputs.path }} --json ))" >> $GITHUB_ENV
       shell: bash
 
     - name: Extract JSON Entries
