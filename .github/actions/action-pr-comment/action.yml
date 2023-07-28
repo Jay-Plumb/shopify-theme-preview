@@ -1,15 +1,15 @@
-name: 'Attach Shopify theme to PR comment'
-description: 'Attaches the shopify links to the PR as a new comment'
+name: "Attach Shopify theme to PR comment"
+description: "Attaches the shopify links to the PR as a new comment"
 inputs:
   preview-link:
-    description: 'The preview link'
+    description: "The preview link"
     required: true
   editor-link:
-    description: 'The editor link'
+    description: "The editor link"
     required: true
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Render template
       id: template
@@ -19,13 +19,14 @@ runs:
         vars: |
           preview_link: ${{ inputs.preview-link }}
           editor_url: ${{ inputs.editor-link }}
+          timestamp: ${{ env.CURRENT_TIME }}
 
     - name: Find Comment
       uses: peter-evans/find-comment@v2
       id: fc
       with:
         issue-number: ${{ github.event.pull_request.number }}
-        comment-author: 'github-actions[bot]'
+        comment-author: "github-actions[bot]"
         body-includes: Preview Link
 
     - name: Create or Update comment

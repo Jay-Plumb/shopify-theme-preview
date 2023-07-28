@@ -87,3 +87,5 @@ steps:
       node-version: 16
       path: shop
 ```
+
+You will also need to manually create the file with the following content added: [preview-link-template.md](.github/preview-link-template.md)

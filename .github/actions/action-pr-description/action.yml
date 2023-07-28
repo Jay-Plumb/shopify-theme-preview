@@ -1,16 +1,22 @@
-name: 'Attach Shopify theme to PR description'
-description: 'Extends/Updates the PR description to attach the Shopify links'
+name: "Attach Shopify theme to PR description"
+description: "Extends/Updates the PR description to attach the Shopify links"
 inputs:
   preview-link:
-    description: 'The preview link'
+    description: "The preview link"
     required: true
   editor-link:
-    description: 'The editor link'
+    description: "The editor link"
     required: true
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
+    - name: Update Timestamp
+      id: timestamp
+      run: |
+        echo "CURRENT_TIME=$(date)" >> $GITHUB_ENV
+      shell: bash
+
     - name: Render template
       id: template
       uses: chuhlomin/render-template@v1.7 # https://github.com/marketplace/actions/render-template https://github.com/chuhlomin/render-template
@@ -19,6 +25,7 @@ runs:
         vars: |
           preview_link: ${{ inputs.preview-link }}
           editor_url: ${{ inputs.editor-link }}
+          timestamp: ${{ env.CURRENT_TIME }}
 
     - name: Existing Body
       run: |
